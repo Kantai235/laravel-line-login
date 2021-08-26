@@ -1,5 +1,7 @@
+![LINE Login Create a channel.](https://i.imgur.com/U69W9YR.png)
+
 # Line Login on Laravel
-這是一個 Laravel 上使用 SocialiteProviders 的 Line 登入範例，以 [laravel-boilerplate](https://github.com/rappasoft/laravel-boilerplate) 作為延伸。
+這是一個 Laravel 上使用 SocialiteProviders 的 Line 登入範例，以 [laravel-boilerplate](https://github.com/rappasoft/laravel-boilerplate) 作為延伸。
 
 # 前置步驟
 1. 建立一個 Laravel 專案，可以使用 [laravel-boilerplate](https://github.com/rappasoft/laravel-boilerplate) 來建立。
