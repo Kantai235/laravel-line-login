@@ -39,3 +39,10 @@
     icon="fab fa-twitter"
     :text="__('Login with Twitter')"
     :hide="!config('services.twitter.active')" />
+
+<x-utils.link
+    :href="route('frontend.auth.social.login', 'line')"
+    class="btn btn-sm btn-outline-info m-1 mt-4"
+    icon="fab fa-facebook"
+    :text="__('Login with Line')"
+    :hide="!config('services.line.active')" />
