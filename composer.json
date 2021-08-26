@@ -1,11 +1,13 @@
 {
-    "name": "rappasoft/laravel-boilerplate",
+    "name": "kantai235/laravel-line-login",
     "type": "project",
-    "description": "The Laravel Boilerplate Project.",
+    "description": "Line Login on Laravel.",
     "keywords": [
         "framework",
         "laravel",
-        "boilerplate"
+        "boilerplate",
+        "socialiteproviders",
+        "line"
     ],
     "license": "MIT",
     "require": {
