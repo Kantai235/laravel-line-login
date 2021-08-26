@@ -1,46 +1,41 @@
-## Laravel Boilerplate (Current: Laravel 8.*) ([Demo](https://demo.laravel-boilerplate.com))
+# Line Login on Laravel
+這是一個 Laravel 上使用 SocialiteProviders 的 Line 登入範例，以 [laravel-boilerplate](https://github.com/rappasoft/laravel-boilerplate) 作為延伸。
 
-[![Latest Stable Version](https://poser.pugx.org/rappasoft/laravel-boilerplate/v/stable)](https://packagist.org/packages/rappasoft/laravel-boilerplate)
-[![Latest Unstable Version](https://poser.pugx.org/rappasoft/laravel-boilerplate/v/unstable)](https://packagist.org/packages/rappasoft/laravel-boilerplate) 
-<br/>
-[![StyleCI](https://styleci.io/repos/30171828/shield?style=plastic)](https://github.styleci.io/repos/30171828)
-![Tests](https://github.com/rappasoft/laravel-boilerplate/workflows/Tests/badge.svg?branch=master)
-<br/>
-![GitHub contributors](https://img.shields.io/github/contributors/rappasoft/laravel-boilerplate.svg)
-![GitHub stars](https://img.shields.io/github/stars/rappasoft/laravel-boilerplate.svg?style=social)
+# 前置步驟
+1. 建立一個 Laravel 專案，可以使用 [laravel-boilerplate](https://github.com/rappasoft/laravel-boilerplate) 來建立。
+2. 引用 [SocialiteProviders/Line](https://github.com/SocialiteProviders/Line) 來安裝套件。
 
-### Demo Credentials
+# 新增 Login with Line 按鈕
+需要在 `config/services.php` 的地方去新增設定
+```php
+'line' => [
+    'active' => env('LINE_ACTIVE', false),
+    'client_id' => env('LINE_CLIENT_ID'),
+    'client_secret' => env('LINE_CLIENT_SECRET'),
+    'redirect' => env('LINE_REDIRECT_URI')
+],
+```
 
-**Admin:** admin@admin.com  
-**Password:** secret
+需要在 `social.blade.php` 的地方去新增登入元件
+```php
+<x-utils.link
+    :href="route('frontend.auth.social.login', 'line')"
+    class="btn btn-sm btn-outline-info m-1 mt-4"
+    icon="fab fa-line"
+    :text="__('Login with Line')"
+    :hide="!config('services.line.active')" />
+```
 
-**User:** user@user.com  
-**Password:** secret
+# 申請 Line Login
+1. 你需要透過 [Line Developers](https://developers.line.biz) 來申請 LINE Login，`App types` 的地方需要包含 `Web app`。
+2. 申請完畢後，將 `Channel ID` 與 `Channel secret` 回填至 `.env` 當中。
+```env
+LINE_ACTIVE=false
+#LINE_CLIENT_ID=
+#LINE_CLIENT_SECRET=
+#LINE_REDIRECT_URI="${APP_URL}/login/line/callback"
+```
 
-### Official Documentation
-
-[Click here for the official documentation](http://laravel-boilerplate.com)
-
-### Slack Channel
-
-Please join us in our Slack channel to get faster responses to your questions. Get your invite here: https://laravel-5-boilerplate.herokuapp.com
-
-### Introduction
-
-Laravel Boilerplate provides you with a massive head start on any size web application. Out of the box it has features like a backend built on CoreUI with Spatie/Permission authorization. It has a frontend scaffold built on Bootstrap 4. Other features such as Two Factor Authentication, User/Role management, searchable/sortable tables built on my [Laravel Livewire tables plugin](https://github.com/rappasoft/laravel-livewire-tables), user impersonation, timezone support, multi-lingual support with 20+ built in languages, demo mode, and much more.
-
-### Issues
-
-If you come across any issues please [report them here](https://github.com/rappasoft/laravel-boilerplate/issues).
-
-### Contributing
-
-Thank you for considering contributing to the Laravel Boilerplate project! Please feel free to make any pull requests, or e-mail me a feature request you would like to see in the future to Anthony Rappa at rappa819@gmail.com.
-
-### Security Vulnerabilities
-
-If you discover a security vulnerability within this boilerplate, please send an e-mail to Anthony Rappa at rappa819@gmail.com, or create a pull request if possible. All security vulnerabilities will be promptly addressed.
-
-### License
-
-MIT: [http://anthony.mit-license.org](http://anthony.mit-license.org)
+# 參考文件
+1. [rappasoft/laravel-boilerplate](https://github.com/rappasoft/laravel-boilerplate)
+2. [SocialiteProviders/Line](https://github.com/SocialiteProviders/Line)
