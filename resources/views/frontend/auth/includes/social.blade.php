@@ -43,6 +43,6 @@
 <x-utils.link
     :href="route('frontend.auth.social.login', 'line')"
     class="btn btn-sm btn-outline-info m-1 mt-4"
-    icon="fab fa-facebook"
+    icon="fab fa-line"
     :text="__('Login with Line')"
     :hide="!config('services.line.active')" />
