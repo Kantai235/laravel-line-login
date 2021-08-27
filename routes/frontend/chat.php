@@ -20,4 +20,4 @@ Route::group([
         });
 });
 
-Route::get('/chat/webhook', [WebhookController::class, 'index'])->name('webhook');
+Route::post('/chat/webhook', [WebhookController::class, 'index'])->name('webhook');
