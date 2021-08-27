@@ -14,7 +14,7 @@ class WebhookController
      */
     public function index(Request $request)
     {
-        activity('line')->log(json_encode($request->json()));
+        activity('line')->log(json_encode($request->getContent()));
 
         return response()->json(null, 200);
     }
