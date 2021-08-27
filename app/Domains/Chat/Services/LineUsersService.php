@@ -24,6 +24,26 @@ class LineUsersService extends BaseService
     }
 
     /**
+     * @param string $id
+     *
+     * @throws GeneralException
+     * @return mixed
+     */
+    public function findByUserId(string $id)
+    {
+        $user = $this->model
+            ->where('user_id', $id)
+            ->first();
+
+        if ($user instanceof $this->model) {
+            return $user;
+        }
+
+        return false;
+        // throw new GeneralException(__('That user does not exist.'));
+    }
+
+    /**
      * @param array $data
      *
      * @return mixed
