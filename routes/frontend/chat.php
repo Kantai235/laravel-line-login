@@ -18,6 +18,6 @@ Route::group([
         ->breadcrumbs(function (Trail $trail) {
             $trail->push(__('Chat'), route('frontend.chat.index'));
         });
-
-    Route::get('webhook', [WebhookController::class, 'index'])->name('webhook');
 });
+
+Route::get('/chat/webhook', [WebhookController::class, 'index'])->name('webhook');
