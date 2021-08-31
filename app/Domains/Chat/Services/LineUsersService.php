@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Auth\Services;
+namespace App\Domains\Chat\Services;
 
 use App\Domains\Chat\Models\LineUsers;
 use App\Exceptions\GeneralException;
