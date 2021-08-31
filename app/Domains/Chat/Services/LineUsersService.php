@@ -177,11 +177,11 @@ class LineUsersService extends BaseService
     protected function createUser(array $data = []): LineUsers
     {
         return $this->model::create([
-            'user_id' => $data['user_id'],
-            'display_name' => $data['display_name'] ?? null,
+            'user_id' => $data['user_id'] ?? $data['userId'],
+            'display_name' => $data['display_name'] ?? $data['displayName'] ?? null,
             'language' => $data['language'] ?? null,
-            'picture_url' => $data['picture_url'] ?? null,
-            'status_message' => $data['status_message'] ?? null,
+            'picture_url' => $data['picture_url'] ?? $data['pictureUrl'] ?? null,
+            'status_message' => $data['status_message'] ?? $data['statusMessage'] ?? null,
         ]);
     }
 }
