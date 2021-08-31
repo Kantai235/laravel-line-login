@@ -94,9 +94,11 @@ class WebhookController
                 /**
                  * 嘗試根據使用者的內容來回應資訊。
                  */
-                if (isset($event['replyToken']) &&
+                if (
+                    isset($event['replyToken']) &&
                     isset($event['message']) &&
-                    isset($event['message']['text'])) {
+                    isset($event['message']['text'])
+                ) {
                     $this->replyMessage($event['message']['text'], $event['replyToken']);
                 }
             }
@@ -122,61 +124,66 @@ class WebhookController
             /**
              * Quick reply
              * https://developers.line.biz/en/reference/messaging-api/#quick-reply
+             *
+             * Example
+             * https://developers.line.biz/en/docs/messaging-api/using-quick-reply/#set-quick-reply-buttons
              */
             case 'Quick reply':
                 $response = $this->client->post($this->root . 'message/reply', [
                     'replyToken' => $reply_token,
                     'messages' => [
-                        "text" => "Quick reply example.",
-                        "type" => "text",
-                        'quickReply' => [
-                            'items' => [
-                                [
-                                    'type' => 'action',
-                                    'action' => [
-                                        'label' => 'Google 超連結',
-                                        'type' => 'uri',
-                                        'uri' => 'https://www.google.com.tw',
+                        [
+                            "text" => "Quick reply example.",
+                            "type" => "text",
+                            'quickReply' => [
+                                'items' => [
+                                    [
+                                        'type' => 'action',
+                                        'action' => [
+                                            'label' => 'Google 超連結',
+                                            'type' => 'uri',
+                                            'uri' => 'https://www.google.com.tw',
+                                        ],
                                     ],
-                                ],
-                                [
-                                    'type' => 'action',
-                                    'action' => [
-                                        'label' => '打電話給「玉山國家公園」',
-                                        'type' => 'uri',
-                                        'uri' => 'tel:+886492773121',
+                                    [
+                                        'type' => 'action',
+                                        'action' => [
+                                            'label' => '打電話給「玉山國家公園」',
+                                            'type' => 'uri',
+                                            'uri' => 'tel:+886492773121',
+                                        ],
                                     ],
-                                ],
-                                [
-                                    'type' => 'action',
-                                    'action' => [
-                                        'label' => '寄 Email 給乾太',
-                                        'type' => 'uri',
-                                        'uri' => 'mailto:kantai.developer@gmail.com',
+                                    [
+                                        'type' => 'action',
+                                        'action' => [
+                                            'label' => '寄 Email 給乾太',
+                                            'type' => 'uri',
+                                            'uri' => 'mailto:kantai.developer@gmail.com',
+                                        ],
                                     ],
-                                ],
-                                /**
-                                 * 您需要了解有關新 LIFF URL 的所有資訊
-                                 * https://engineering.linecorp.com/zh-hant/blog/new-liff-url-infomation/
-                                 */
-                                [
-                                    'type' => 'action',
-                                    'action' => [
-                                        'label' => 'LIFF URL',
-                                        'type' => 'uri',
-                                        'uri' => 'https://liff.line.me/1653575653-e9vXldMN',
+                                    /**
+                                     * 您需要了解有關新 LIFF URL 的所有資訊
+                                     * https://engineering.linecorp.com/zh-hant/blog/new-liff-url-infomation/
+                                     */
+                                    [
+                                        'type' => 'action',
+                                        'action' => [
+                                            'label' => 'LIFF URL',
+                                            'type' => 'uri',
+                                            'uri' => 'https://liff.line.me/1653575653-e9vXldMN',
+                                        ],
                                     ],
-                                ],
-                                [
-                                    'type' => 'action',
-                                    'action' => [
-                                        'label' => '打開「玉山國家公園」地圖',
-                                        'type' => 'uri',
-                                        'uri' => 'https://www.google.com/maps/place/玉山國家公園/@24.0857955,120.974425,8.93z/data=!4m5!3m4!1s0x346edf7afc18cf61:0x900cc892465fcc1b!8m2!3d23.4698853!4d120.957737',
+                                    [
+                                        'type' => 'action',
+                                        'action' => [
+                                            'label' => '打開「玉山國家公園」地圖',
+                                            'type' => 'uri',
+                                            'uri' => 'https://www.google.com/maps/place/玉山國家公園/@24.0857955,120.974425,8.93z/data=!4m5!3m4!1s0x346edf7afc18cf61:0x900cc892465fcc1b!8m2!3d23.4698853!4d120.957737',
+                                        ],
                                     ],
                                 ],
                             ],
-                        ],
+                        ]
                     ],
                 ]);
                 Log::debug(json_encode($response->json()));
