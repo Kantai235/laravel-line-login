@@ -124,7 +124,7 @@ class WebhookController
              * https://developers.line.biz/en/reference/messaging-api/#quick-reply
              */
             case 'Quick reply':
-                $this->client->post($this->root . 'message/reply', [
+                $response = $this->client->post($this->root . 'message/reply', [
                     'replyToken' => $reply_token,
                     'messages' => [
                         "text" => "Quick reply example.",
@@ -179,11 +179,8 @@ class WebhookController
                         ],
                     ],
                 ]);
-                break;
-
-            default:
-                # code...
-                break;
+                Log::debug(json_encode($response->json()));
+                return;
         }
     }
 }
