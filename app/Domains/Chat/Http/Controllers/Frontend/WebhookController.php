@@ -53,9 +53,12 @@ class WebhookController
                 ]);
 
                 if (isset($event['source']) && isset($event['source']['userId'])) {
-                    if (!$this->userService->findByUserId($event['source']['userId'])) {
-                        $response = Http::withToken(config('line.channel.access_token'))
-                            ->get(sprintf('https://api.line.me/v2/bot/profile/%s', $event['source']['userId']));
+                    $response = Http::withToken(config('line.channel.access_token'))
+                        ->get(sprintf('https://api.line.me/v2/bot/profile/%s', $event['source']['userId']));
+                    Log::debug(json_encode($response->json()));
+                    if ($user = $this->userService->findByUserId($event['source']['userId'])) {
+                        $this->userService->update($user, $response->json());
+                    } else {
                         $this->userService->store($response->json());
                     }
                 }
