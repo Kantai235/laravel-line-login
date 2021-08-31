@@ -2,8 +2,8 @@
 
 namespace App\Domains\Chat\Http\Controllers\Frontend;
 
-use App\Domains\Auth\Services\LineEventsService;
-use App\Domains\Auth\Services\LineUsersService;
+use App\Domains\Chat\Services\LineEventsService;
+use App\Domains\Chat\Services\LineUsersService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
