@@ -233,6 +233,47 @@ class WebhookController
                 ]);
                 Log::debug(json_encode($response->json()));
                 return;
+
+            /**
+             * Text message
+             * https://developers.line.biz/en/reference/messaging-api/#text-message
+             */
+            case 'Text message':
+
+                $response = $this->client->post($this->root . 'message/reply', [
+                    'replyToken' => $reply_token,
+                    'messages' => [
+                        [
+                            // Text message example
+                            "type" => "text",
+                            "text" => "Hello, world",
+                        ],
+                        [
+                            // Text message example with LINE emoji
+                            "type" => "text",
+                            "text" => "$ LINE emoji $",
+                            "emojis" => [
+                              [
+                                "index" => 0,
+                                "productId" => "5ac1bfd5040ab15980c9b435",
+                                "emojiId" => "001"
+                              ],
+                              [
+                                "index" => 13,
+                                "productId" => "5ac1bfd5040ab15980c9b435",
+                                "emojiId" => "002",
+                              ],
+                            ],
+                        ],
+                        [
+                            // Text message example with LINE original unicode emoji (deprecated)
+                            "type" => "text",
+                            "text" => "\uDBC0\uDC84 LINE original emoji",
+                        ],
+                    ],
+                ]);
+                Log::debug(json_encode($response->json()));
+                return;
         }
     }
 }
