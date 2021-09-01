@@ -214,18 +214,18 @@ class WebhookController
                                             'label' => 'Location',
                                         ],
                                     ],
-                                    [
-                                        /**
-                                         * Rich menu switch action
-                                         * https://developers.line.biz/en/reference/messaging-api/#richmenu-switch-action
-                                         */
-                                        'type' => 'action',
-                                        'action' => [
-                                            'type' => 'richmenuswitch',
-                                            'richMenuAliasId' => 'richmenu-alias-b',
-                                            'data' => 'richmenu-changed-to-b',
-                                        ],
-                                    ],
+                                    // [
+                                    //     /**
+                                    //      * Rich menu switch action
+                                    //      * https://developers.line.biz/en/reference/messaging-api/#richmenu-switch-action
+                                    //      */
+                                    //     'type' => 'action',
+                                    //     'action' => [
+                                    //         'type' => 'richmenuswitch',
+                                    //         'richMenuAliasId' => 'richmenu-alias-b',
+                                    //         'data' => 'richmenu-changed-to-b',
+                                    //     ],
+                                    // ],
                                 ],
                             ],
                         ]
