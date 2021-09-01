@@ -138,47 +138,92 @@ class WebhookController
                             'quickReply' => [
                                 'items' => [
                                     [
+                                        /**
+                                         * Message action
+                                         * https://developers.line.biz/en/reference/messaging-api/#message-action
+                                         */
                                         'type' => 'action',
                                         'action' => [
-                                            'label' => 'Google 超連結',
-                                            'type' => 'uri',
-                                            'uri' => 'https://www.google.com.tw',
+                                            'type' => 'message',
+                                            'label' => 'Message action (label)',
+                                            'text' => 'Message action (text)',
                                         ],
                                     ],
                                     [
+                                        /**
+                                         * Datetime picker action
+                                         * https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action
+                                         */
                                         'type' => 'action',
                                         'action' => [
-                                            'label' => '打電話給「玉山國家公園」',
-                                            'type' => 'uri',
+                                            'type' => 'datetimepicker',
+                                            'label' => 'Select date',
                                             'uri' => 'tel:+886492773121',
+                                            "data" => "storeId=12345",
+                                            "mode" => "datetime",
+                                            "initial" => "2017-12-25t00:00",
+                                            "max" => "2018-01-24t23:59",
+                                            "min" => "2017-12-25t00:00",
                                         ],
                                     ],
                                     [
+                                        /**
+                                         * Camera action
+                                         * https://developers.line.biz/en/reference/messaging-api/#camera-action
+                                         */
                                         'type' => 'action',
                                         'action' => [
-                                            'label' => '寄 Email 給乾太',
-                                            'type' => 'uri',
-                                            'uri' => 'mailto:kantai.developer@gmail.com',
-                                        ],
-                                    ],
-                                    /**
-                                     * 您需要了解有關新 LIFF URL 的所有資訊
-                                     * https://engineering.linecorp.com/zh-hant/blog/new-liff-url-infomation/
-                                     */
-                                    [
-                                        'type' => 'action',
-                                        'action' => [
-                                            'label' => 'LIFF URL',
-                                            'type' => 'uri',
-                                            'uri' => 'https://liff.line.me/1653575653-e9vXldMN',
+                                            'type' => 'camera',
+                                            'label' => 'Camera',
                                         ],
                                     ],
                                     [
+                                        /**
+                                         * Camera roll action
+                                         * https://developers.line.biz/en/reference/messaging-api/#camera-roll-action
+                                         */
                                         'type' => 'action',
                                         'action' => [
-                                            'label' => '打開「玉山國家公園」地圖',
+                                            'type' => 'cameraRoll',
+                                            'label' => 'Camera roll',
+                                        ],
+                                    ],
+                                    [
+                                        /**
+                                         * URI action
+                                         * https://developers.line.biz/en/reference/messaging-api/#uri-action
+                                         *
+                                         * 您需要了解有關新 LIFF URL 的所有資訊
+                                         * https://engineering.linecorp.com/zh-hant/blog/new-liff-url-infomation/
+                                         */
+                                        'type' => 'action',
+                                        'action' => [
                                             'type' => 'uri',
-                                            'uri' => 'https://www.google.com/maps/place/玉山國家公園/@24.0857955,120.974425,8.93z/data=!4m5!3m4!1s0x346edf7afc18cf61:0x900cc892465fcc1b!8m2!3d23.4698853!4d120.957737',
+                                            'label' => 'Google',
+                                            'uri' => 'https://google.coom',
+                                        ],
+                                    ],
+                                    [
+                                        /**
+                                         * Location action
+                                         * https://developers.line.biz/en/reference/messaging-api/#location-action
+                                         */
+                                        'type' => 'action',
+                                        'action' => [
+                                            'type' => 'location',
+                                            'label' => 'Location',
+                                        ],
+                                    ],
+                                    [
+                                        /**
+                                         * Rich menu switch action
+                                         * https://developers.line.biz/en/reference/messaging-api/#richmenu-switch-action
+                                         */
+                                        'type' => 'action',
+                                        'action' => [
+                                            'type' => 'richmenuswitch',
+                                            'richMenuAliasId' => 'richmenu-alias-b',
+                                            'data' => 'richmenu-changed-to-b',
                                         ],
                                     ],
                                 ],
