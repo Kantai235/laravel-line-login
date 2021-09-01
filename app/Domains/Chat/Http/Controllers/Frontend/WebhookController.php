@@ -145,7 +145,7 @@ class WebhookController
                                         'type' => 'action',
                                         'action' => [
                                             'type' => 'message',
-                                            'label' => 'Message action (label)',
+                                            'label' => 'Message action',
                                             'text' => 'Message action (text)',
                                         ],
                                     ],
