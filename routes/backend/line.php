@@ -30,43 +30,39 @@ Route::group([
                     ->push(__('Create Reply'), route('admin.line.reply.create'));
             });
 
-        Route::post('/', [UserController::class, 'store'])->name('store');
+        Route::post('/', [ReplyController::class, 'store'])->name('store');
 
-        Route::group(['prefix' => '{user}'], function () {
-            Route::get('edit', [UserController::class, 'edit'])
+        Route::group(['prefix' => '{reply}'], function () {
+            Route::get('edit', [ReplyController::class, 'edit'])
                 ->name('edit')
                 ->breadcrumbs(function (Trail $trail, MessageKeywords $model) {
                     $trail->parent('admin.line.reply.show', $model)
                         ->push(__('Edit'), route('admin.line.reply.edit', $model));
                 });
 
-            Route::patch('/', [UserController::class, 'update'])->name('update');
-            Route::delete('/', [UserController::class, 'destroy'])->name('destroy');
+            Route::patch('/', [ReplyController::class, 'update'])->name('update');
+            Route::delete('/', [ReplyController::class, 'destroy'])->name('destroy');
         });
 
-        Route::group(['prefix' => '{deletedUser}'], function () {
-            Route::patch('restore', [DeletedUserController::class, 'update'])->name('restore');
-            Route::delete('permanently-delete', [DeletedUserController::class, 'destroy'])->name('permanently-delete');
+        Route::group(['prefix' => '{deletedReply}'], function () {
+            Route::patch('restore', [DeletedReplyController::class, 'update'])->name('restore');
+            Route::delete('permanently-delete', [DeletedReplyController::class, 'destroy'])->name('permanently-delete');
         });
-    });
 
-    Route::group([
-        'middleware' => 'permission:admin.access.user.list|admin.access.user.deactivate|admin.access.user.reactivate|admin.access.user.clear-session|admin.access.user.impersonate|admin.access.user.change-password',
-    ], function () {
-        Route::get('/', [UserController::class, 'index'])
+        Route::get('/', [ReplyController::class, 'index'])
             ->name('index')
             ->breadcrumbs(function (Trail $trail) {
                 $trail->parent('admin.dashboard')
-                    ->push(__('User Management'), route('admin.line.reply.index'));
+                    ->push(__('Reply Management'), route('admin.line.reply.index'));
             });
 
-        Route::group(['prefix' => '{user}'], function () {
-            Route::get('/', [UserController::class, 'show'])
+        Route::group(['prefix' => '{reply}'], function () {
+            Route::get('/', [ReplyController::class, 'show'])
                 ->name('show')
                 ->middleware('permission:admin.access.user.list')
-                ->breadcrumbs(function (Trail $trail, User $user) {
+                ->breadcrumbs(function (Trail $trail, MessageKeywords $model) {
                     $trail->parent('admin.line.reply.index')
-                        ->push($user->name, route('admin.line.reply.show', $user));
+                        ->push($model->id, route('admin.line.reply.show', $model));
                 });
         });
     });
