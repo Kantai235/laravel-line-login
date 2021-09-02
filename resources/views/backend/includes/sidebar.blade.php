@@ -72,6 +72,38 @@
             </li>
         @endif
 
+        <li class="c-sidebar-nav-dropdown {{ activeClass(Route::is('admin.line.*'), 'c-open c-show') }}">
+            <x-utils.link
+                href="#"
+                icon="c-sidebar-nav-icon cil-settings"
+                class="c-sidebar-nav-dropdown-toggle"
+                :text="__('LINE Manager')" />
+
+            <ul class="c-sidebar-nav-dropdown-items">
+                <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                        :href="route('admin.line.reply.index')"
+                        class="c-sidebar-nav-link"
+                        :text="__('Auto reply message')"
+                        :active="activeClass(Route::is('admin.line.reply.*'), 'c-active')" />
+                </li>
+                {{-- <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                        :href="route('admin.line.account.index')"
+                        class="c-sidebar-nav-link"
+                        :text="__('Account')"
+                        :active="activeClass(Route::is('admin.line.account.*'), 'c-active')" />
+                </li> --}}
+                {{-- <li class="c-sidebar-nav-item">
+                    <x-utils.link
+                        :href="route('admin.line.event.index')"
+                        class="c-sidebar-nav-link"
+                        :text="__('Events')"
+                        :active="activeClass(Route::is('admin.line.event.*'), 'c-active')" />
+                </li> --}}
+            </ul>
+        </li>
+
         @if ($logged_in_user->hasAllAccess())
             <li class="c-sidebar-nav-dropdown">
                 <x-utils.link
