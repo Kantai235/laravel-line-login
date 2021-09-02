@@ -4,6 +4,7 @@ namespace App\Domains\Chat\Http\Controllers\Frontend;
 
 use App\Domains\Chat\Services\LineEventsService;
 use App\Domains\Chat\Services\LineUsersService;
+use App\Domains\Chat\Services\MessageKeywordsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Log;
@@ -34,16 +35,26 @@ class WebhookController
     protected $eventService;
 
     /**
+     * @var MessageKeywordsService
+     */
+    protected $keywordService;
+
+    /**
      * WebhookController constructor.
      *
      * @param LineUsersService $userService
      * @param LineEventsService $eventService
+     * @param MessageKeywordsService $keywordService
      */
-    public function __construct(LineUsersService $userService, LineEventsService $eventService)
+    public function __construct(
+        LineUsersService $userService,
+        LineEventsService $eventService,
+        MessageKeywordsService $keywordService)
     {
         $this->client = Http::withToken(config('line.channel.access_token'));
         $this->userService = $userService;
         $this->eventService = $eventService;
+        $this->keywordService = $keywordService;
     }
 
     /**
@@ -99,7 +110,20 @@ class WebhookController
                     isset($event['message']) &&
                     isset($event['message']['text'])
                 ) {
-                    $this->replyMessage($event['message']['text'], $event['replyToken']);
+                    /**
+                     * 如果有符合 MessageKeywords 的關鍵字，那就依照 response 來回應
+                     */
+                    if ($model = $this->keywordService->findByKeywords($event['message']['text'])) {
+                        $response = $this->client->post($this->root . 'message/reply', [
+                            'replyToken' => $event['replyToken'],
+                            'messages' => json_decode($model->response, true),
+                        ]);
+                    } else {
+                        /**
+                         * 找不到關鍵字，因此透過寫死判定來回應
+                         */
+                        $this->replyMessage($event['message']['text'], $event['replyToken']);
+                    }
                 }
             }
         }
