@@ -116,13 +116,18 @@ class WebhookController
                     if ($model = $this->keywordService->findByKeywords($event['message']['text'])) {
                         $request = [
                             'replyToken' => $event['replyToken'],
-                            'messages' => [
-                                'quickReply' => $model->response['quickReply'],
-                            ],
+                            'messages' => [],
                         ];
                         if (isset($model->content)) {
-                            $request['messages']['text'] = $model->content;
-                            $request['messages']['type'] = 'text';
+                            array_push($request['messages'], [
+                                'text' => $model->content,
+                                'type' => 'text',
+                                'quickReply' => $model->response['quickReply'],
+                            ]);
+                        } else {
+                            array_push($request['messages'], [
+                                'quickReply' => $model->response['quickReply'],
+                            ]);
                         }
                         Log::debug(json_encode($request));
                         $response = $this->client->post($this->root . 'message/reply', $request);
