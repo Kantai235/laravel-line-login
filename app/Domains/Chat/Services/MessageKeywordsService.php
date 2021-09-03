@@ -32,7 +32,7 @@ class MessageKeywordsService extends BaseService
     public function findByKeywords(string $keyword)
     {
         $model = $this->model
-            ->where('name', 'like', '%' . $keyword . '%')
+            ->where('keywords', 'like', '%' . $keyword . '%')
             ->first();
 
         if ($model instanceof $this->model) {
