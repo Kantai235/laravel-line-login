@@ -114,10 +114,15 @@ class WebhookController
                      * 如果有符合 MessageKeywords 的關鍵字，那就依照 response 來回應
                      */
                     if ($model = $this->keywordService->findByKeywords($event['message']['text'])) {
-                        $response = $this->client->post($this->root . 'message/reply', [
+                        $request = [
                             'replyToken' => $event['replyToken'],
                             'messages' => json_decode($model->response, true),
-                        ]);
+                        ];
+                        if (isset($model->content)) {
+                            $request['text'] = $model->content;
+                            $request['type'] = 'text';
+                        }
+                        $response = $this->client->post($this->root . 'message/reply', $request);
                     } else {
                         /**
                          * 找不到關鍵字，因此透過寫死判定來回應

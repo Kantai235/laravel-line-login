@@ -1,122 +1,88 @@
-@inject('model', '\App\Domains\Auth\Models\User')
+@inject('model', '\App\Domains\Chat\Models\MessageKeywords')
 
 @extends('backend.layouts.app')
 
-@section('title', __('Create User'))
+@section('title', __('Create Reply'))
+
+@push('before-scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var keywords_container = $(".keywords_container");
+            var keywords_add_button = $(".keywords_add_button");
+
+            $(keywords_add_button).click(function(e) {
+                e.preventDefault();
+                $(keywords_container).append('<div class="row mb-1"><div class="col-10"><input type="text" name="keywords[]" class="form-control" maxlength="256" required /></div><div class="col-2"><a href="#" class="keywords_delete_button btn btn-block btn-danger">Delete</a></div></div>');
+            });
+
+            $(keywords_container).on("click", ".keywords_delete_button", function(e) {
+                e.preventDefault();
+                $(this).parent('div').parent('div').remove();
+            })
+        });
+    </script>
+@endpush
 
 @section('content')
-    <x-forms.post :action="route('admin.auth.user.store')">
+    <x-forms.post :action="route('admin.line.reply.store')">
         <x-backend.card>
             <x-slot name="header">
-                @lang('Create User')
+                @lang('Create Reply')
             </x-slot>
 
             <x-slot name="headerActions">
-                <x-utils.link class="card-header-action" :href="route('admin.auth.user.index')" :text="__('Cancel')" />
+                <x-utils.link class="card-header-action" :href="route('admin.line.reply.index')" :text="__('Cancel')" />
             </x-slot>
 
             <x-slot name="body">
-                <div x-data="{userType : '{{ $model::TYPE_USER }}'}">
-                    <div class="form-group row">
-                        <label for="name" class="col-md-2 col-form-label">@lang('Type')</label>
+                <div class="form-group row">
+                    <label for="keywords" class="col-md-2 col-form-label">@lang('Keywords')</label>
 
-                        <div class="col-md-10">
-                            <select name="type" class="form-control" required x-on:change="userType = $event.target.value">
-                                <option value="{{ $model::TYPE_USER }}">@lang('User')</option>
-                                <option value="{{ $model::TYPE_ADMIN }}">@lang('Administrator')</option>
-                            </select>
-                        </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
-                        <label for="name" class="col-md-2 col-form-label">@lang('Name')</label>
-
-                        <div class="col-md-10">
-                            <input type="text" name="name" class="form-control" placeholder="{{ __('Name') }}" value="{{ old('name') }}" maxlength="100" required />
-                        </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
-                        <label for="email" class="col-md-2 col-form-label">@lang('E-mail Address')</label>
-
-                        <div class="col-md-10">
-                            <input type="email" name="email" class="form-control" placeholder="{{ __('E-mail Address') }}" value="{{ old('email') }}" maxlength="255" required />
-                        </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
-                        <label for="password" class="col-md-2 col-form-label">@lang('Password')</label>
-
-                        <div class="col-md-10">
-                            <input type="password" name="password" id="password" class="form-control" placeholder="{{ __('Password') }}" maxlength="100" required autocomplete="new-password" />
-                        </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
-                        <label for="password_confirmation" class="col-md-2 col-form-label">@lang('Password Confirmation')</label>
-
-                        <div class="col-md-10">
-                            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('Password Confirmation') }}" maxlength="100" required autocomplete="new-password" />
-                        </div>
-                    </div><!--form-group-->
-
-                    <div class="form-group row">
-                        <label for="active" class="col-md-2 col-form-label">@lang('Active')</label>
-
-                        <div class="col-md-10">
-                            <div class="form-check">
-                                <input name="active" id="active" class="form-check-input" type="checkbox" value="1" {{ old('active', true) ? 'checked' : '' }} />
-                            </div><!--form-check-->
-                        </div>
-                    </div><!--form-group-->
-
-                    <div x-data="{ emailVerified : false }">
-                        <div class="form-group row">
-                            <label for="email_verified" class="col-md-2 col-form-label">@lang('E-mail Verified')</label>
-
-                            <div class="col-md-10">
-                                <div class="form-check">
-                                    <input
-                                        type="checkbox"
-                                        name="email_verified"
-                                        id="email_verified"
-                                        value="1"
-                                        class="form-check-input"
-                                        x-on:click="emailVerified = !emailVerified"
-                                        {{ old('email_verified') ? 'checked' : '' }} />
-                                </div><!--form-check-->
+                    <div class="col-md-10 keywords_container">
+                        <button type="button" class="keywords_add_button btn btn-info mb-1">
+                            <span class="cil-contrast btn-icon mr-2"></span> Add New Field
+                        </button>
+                        <div class="row mb-1">
+                            <div class="col-12">
+                                <input type="text" name="keywords[]" class="form-control" maxlength="256" required />
                             </div>
-                        </div><!--form-group-->
-
-                        <div x-show="!emailVerified">
-                            <div class="form-group row">
-                                <label for="send_confirmation_email" class="col-md-2 col-form-label">@lang('Send Confirmation E-mail')</label>
-
-                                <div class="col-md-10">
-                                    <div class="form-check">
-                                        <input
-                                            type="checkbox"
-                                            name="send_confirmation_email"
-                                            id="send_confirmation_email"
-                                            value="1"
-                                            class="form-check-input"
-                                            {{ old('send_confirmation_email') ? 'checked' : '' }} />
-                                    </div><!--form-check-->
-                                </div>
-                            </div><!--form-group-->
                         </div>
                     </div>
+                </div><!--form-group-->
 
-                    @include('backend.auth.includes.roles')
+                <div class="form-group row">
+                    <label for="response" class="col-md-2 col-form-label">@lang('Response - Quick reply')</label>
 
-                    @if (!config('boilerplate.access.user.only_roles'))
-                        @include('backend.auth.includes.permissions')
-                    @endif
-                </div>
+                    <div class="col-md-10">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="inputState">Action</label>
+                                <select id="inputState" class="form-control">
+                                    <option selected>Choose...</option>
+                                    <option value="message">Message action</option>
+                                    <option value="datetimepicker">Datetime picker action</option>
+                                    <option value="camera">Camera action</option>
+                                    <option value="cameraRoll">Camera roll action</option>
+                                    <option value="uri">URI action</option>
+                                    <option value="location">Location action</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputCity">City</label>
+                                <input type="text" class="form-control" id="inputCity">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="inputZip">Zip</label>
+                                <input type="text" class="form-control" id="inputZip">
+                            </div>
+                        </div>
+                    </div>
+                </div><!--form-group-->
             </x-slot>
 
             <x-slot name="footer">
-                <button class="btn btn-sm btn-primary float-right" type="submit">@lang('Create User')</button>
+                <button class="btn btn-sm btn-primary float-right" type="submit">@lang('Create Reply')</button>
             </x-slot>
         </x-backend.card>
     </x-forms.post>

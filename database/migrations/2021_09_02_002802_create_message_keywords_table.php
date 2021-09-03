@@ -18,8 +18,9 @@ class CreateMessageKeywordsTable extends Migration
     {
         Schema::create('message_keywords', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->json('keywords');
-            $table->json('response');
+            $table->string('content')->nullable()->comment('Text 內容');
+            $table->json('keywords')->comment('觸發關鍵字');
+            $table->json('response')->comment('回覆內容');
             $table->timestamps();
             $table->softDeletes();
         });

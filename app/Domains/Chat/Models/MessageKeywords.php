@@ -34,7 +34,18 @@ class MessageKeywords extends Model
      * @var array
      */
     protected $fillable = [
+        'content',
         'keywords',
         'response',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'keywords' => 'json',
+        'response' => 'json',
     ];
 }
