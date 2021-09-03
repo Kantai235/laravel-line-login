@@ -119,8 +119,8 @@ class WebhookController
                             'messages' => $model->response,
                         ];
                         if (isset($model->content)) {
-                            $request['text'] = $model->content;
-                            $request['type'] = 'text';
+                            $request['messages']['text'] = $model->content;
+                            $request['messages']['type'] = 'text';
                         }
                         Log::debug(json_encode($request));
                         $response = $this->client->post($this->root . 'message/reply', $request);
