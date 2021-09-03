@@ -116,7 +116,7 @@ class WebhookController
                     if ($model = $this->keywordService->findByKeywords($event['message']['text'])) {
                         $request = [
                             'replyToken' => $event['replyToken'],
-                            'messages' => json_decode($model->response, true),
+                            'messages' => $model->response,
                         ];
                         if (isset($model->content)) {
                             $request['text'] = $model->content;
