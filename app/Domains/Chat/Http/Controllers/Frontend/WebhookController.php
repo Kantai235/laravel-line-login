@@ -122,7 +122,9 @@ class WebhookController
                             $request['text'] = $model->content;
                             $request['type'] = 'text';
                         }
+                        Log::debug(json_encode($request));
                         $response = $this->client->post($this->root . 'message/reply', $request);
+                        Log::debug(json_encode($response->json()));
                     } else {
                         /**
                          * 找不到關鍵字，因此透過寫死判定來回應
