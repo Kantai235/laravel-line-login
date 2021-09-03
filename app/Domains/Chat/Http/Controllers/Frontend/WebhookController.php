@@ -117,7 +117,7 @@ class WebhookController
                         $request = [
                             'replyToken' => $event['replyToken'],
                             'messages' => [
-                                'replyToken' => $model->response['quickReply'],
+                                'quickReply' => $model->response['quickReply'],
                             ],
                         ];
                         if (isset($model->content)) {
