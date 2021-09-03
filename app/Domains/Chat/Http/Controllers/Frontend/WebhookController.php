@@ -116,9 +116,10 @@ class WebhookController
                     if ($model = $this->keywordService->findByKeywords($event['message']['text'])) {
                         $request = [
                             'replyToken' => $event['replyToken'],
-                            'messages' => [],
+                            'messages' => [
+                                $model->response,
+                            ],
                         ];
-                        array_push($request['messages'], $model->response);
                         if (isset($model->content)) {
                             $request['messages']['text'] = $model->content;
                             $request['messages']['type'] = 'text';
