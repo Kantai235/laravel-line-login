@@ -162,7 +162,7 @@ class WebhookController
              * https://developers.line.biz/en/docs/messaging-api/using-quick-reply/#set-quick-reply-buttons
              */
             case 'Quick reply':
-                $response = $this->client->post($this->root . 'message/reply', [
+                $request =  [
                     'replyToken' => $reply_token,
                     'messages' => [
                         [
@@ -263,7 +263,9 @@ class WebhookController
                             ],
                         ]
                     ],
-                ]);
+                ];
+                Log::debug(json_encode($request));
+                $response = $this->client->post($this->root . 'message/reply', $request);
                 Log::debug(json_encode($response->json()));
                 return;
 
@@ -272,8 +274,7 @@ class WebhookController
              * https://developers.line.biz/en/reference/messaging-api/#text-message
              */
             case 'Text message':
-
-                $response = $this->client->post($this->root . 'message/reply', [
+                $request = [
                     'replyToken' => $reply_token,
                     'messages' => [
                         [
@@ -304,7 +305,9 @@ class WebhookController
                             "text" => "\uDBC0\uDC84 LINE original emoji",
                         ],
                     ],
-                ]);
+                ];
+                Log::debug(json_encode($request));
+                $response = $this->client->post($this->root . 'message/reply', $request);
                 Log::debug(json_encode($response->json()));
                 return;
         }
